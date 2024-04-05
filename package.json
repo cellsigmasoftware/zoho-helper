@@ -1,0 +1,29 @@
+{
+  "name": "zoho-helper",
+  "version": "1.51.8",
+  "description": "handling zoho functions",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emrekucuk1/zoho-helper"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "mocha": "^8.3.2",
+    "np": "^7.5.0",
+    "randomstring": "^1.1.5",
+    "request": "^2.88.2"
+  },
+  "bugs": {
+    "url": "https://github.com/emrekucuk1/zoho-helper/issues"
+  },
+  "homepage": "https://github.com/emrekucuk1/zoho-helper#readme",
+  "directories": {
+    "test": "tests"
+  }
+}
