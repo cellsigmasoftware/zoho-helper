@@ -1,5 +1,5 @@
 {
-  "name": "zoho-helper",
+  "name": "@sigmasofttelecom/zoho-helper",
   "version": "1.0.0",
   "description": "handling zoho functions",
   "main": "index.js",
