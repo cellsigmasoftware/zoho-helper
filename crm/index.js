@@ -22,6 +22,35 @@ class CRM extends ZohoAuth {
                 console.error(e.message);
         }
     }
+
+    async fetchAccounts(org_id) {
+        let page = 1;
+        let allAccounts = [];
+    
+        while (true) {
+            const url = `https://www.zohoapis.com/crm/v2/Accounts?organization_id=${org_id}&page=${page}`;
+            const method = "GET";
+            const token = await this.getToken();
+
+            try {
+                const response = await this.customRequestV2(url, method);
+    
+                // Assuming the response structure is something like {info: {more_records: true/false}, data: [...]}
+                if (response.info.more_records) {
+                    allAccounts = allAccounts.concat(response.data);
+                    page += 1; // Move to the next page
+                } else {
+                    allAccounts = allAccounts.concat(response.data);
+                    break; // No more records to fetch
+                }
+            } catch (error) {
+                console.error("Error fetching accounts:", error);
+                return null;
+            }
+        }
+    
+        return allAccounts;
+    }
 }
 
 module.exports = CRM;

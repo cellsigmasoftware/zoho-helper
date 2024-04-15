@@ -39,6 +39,100 @@ class Books extends ZohoAuth {
         }
     }
 
+      /**
+     *
+     * @param org_id
+     * @returns {Promise<*|undefined>}
+     */
+      async getCustomers(org_id) {
+        let page = 1;
+        let perPage = 200; // Maximum allowed by Zoho Books API
+        let allCustomers = [];
+    
+        try {
+            while (true) {
+                const response = await this.customRequestV2(`https://books.zoho.com/api/v3/contacts?organization_id=${org_id}&page=${page}&per_page=${perPage}`, "GET");
+    
+                // Check if the response contains the expected data
+                if (!response || !response.contacts) {
+                    console.error('Unexpected response structure:', response);
+                    break;
+                }
+    
+                // Add the customers from the current page to the allCustomers array
+                allCustomers = allCustomers.concat(response.contacts);
+    
+                // Check if there are more pages to fetch
+                const hasMorePages = response.page_context && response.page_context.has_more_page;
+                if (!hasMorePages) {
+                    break; // No more pages to fetch
+                }
+    
+                page++; // Move to the next page
+            }
+        } catch (error) {
+            console.error('Error fetching customers:', error);
+        }
+    
+        return allCustomers;
+    }
+
+
+
+
+    async postContacts(org_id,contactDetails){
+        const token = await this.getToken();
+        const url = `https://books.zoho.com/api/v3/contacts?organization_id=${org_id}`;
+        const method = "POST";
+        try {
+            const response = await this.customRequestV3(url, method, contactDetails, org_id);
+            return response; // The response should contain the created contact details
+        } catch (error) {
+            console.error("Error creating contact:", error);
+            return null;
+        }
+
+
+    }
+
+    /**
+     *
+     * @param org_id
+     * @returns {Promise<*|undefined>}
+     */
+
+    async getVendors(org_id) {
+        let page = 1;
+        let allVendors = [];
+    
+        try {
+            while (true) {
+                const response = await this.customRequestV2(`https://books.zoho.com/api/v3/vendors?organization_id=${org_id}&page=${page}`, "GET");
+    
+                // Check if the response contains the expected data
+                if (!response || !response.contacts) {
+                    console.error('Unexpected response structure:', response);
+                    break;
+                }
+    
+                // Add the vendors from the current page to the allVendors array
+                allVendors = allVendors.concat(response.contacts);
+    
+                // Check if there are more pages to fetch
+                const hasMorePages = response.page_context && response.page_context.has_more_page;
+                if (!hasMorePages) {
+                    break; // No more pages to fetch
+                }
+    
+                page++; // Move to the next page
+            }
+        } catch (error) {
+            console.error('Error fetching vendors:', error);
+        }
+    
+        return allVendors;
+    }
+
     /**
      *
      * @returns {Promise<*|undefined>}
@@ -181,13 +275,24 @@ class Books extends ZohoAuth {
      * @returns {Promise<*|undefined>}
      */
     async chartOfAccounts(org_id) {
+        let page = 1;
+        let allResults = [];
+    
         try {
-            return await this.customRequestV2(`https://books.zoho.com/api/v3/chartofaccounts?organization_id=${org_id}`, "GET");
-        }catch (e) {
-            if (e.response !== undefined)
-                console.error(e.response.data);
-            else
-                console.error(e.message);
+            let hasMorePages = true;
+            while (hasMorePages) {
+                const response = await this.customRequestV2(`https://books.zoho.com/api/v3/chartofaccounts?organization_id=${org_id}&page=${page}`, "GET");
+                const results = response.data;
+                allResults = allResults.concat(results);
+    
+                // Check if there are more pages
+                hasMorePages = response.pagination && response.pagination.total_pages > page;
+                page++;
+            }
+            return allResults;
+        } catch (error) {
+            console.error(error);
+            return [];
         }
     }
 
