@@ -91,8 +91,19 @@ class Books extends ZohoAuth {
             console.error("Error creating contact:", error);
             return null;
         }
+    }
 
-
+    async updateContacts(contact_id,parameters,org_id){
+        const token = await this.getToken();
+        const url =`https://books.zoho.com/api/v3/contacts/${contact_id}`
+        const method = "PUT";
+        try {
+            const response = await this.customRequestV3(url,method,parameters,org_id)
+            return response;
+        } catch (error) {
+            console.error("Error updating contact:", error);
+            return null;
+        }
     }
 
     /**
