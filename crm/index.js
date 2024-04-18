@@ -54,7 +54,6 @@ class CRM extends ZohoAuth {
   }
   async createAccounts(org_id, data) {
     const url = `https://www.zohoapis.com/crm/v2/Accounts?organization_id=${org_id}`;
-    const token = await this.getToken();
     const method = "POST";
 
     try {
@@ -62,6 +61,23 @@ class CRM extends ZohoAuth {
       console.log("Account Created: ", response);
     } catch (error) {
       console.error("Failed to create account: ", error);
+    }
+  }
+
+  async updateAccount(accountData) {
+    const url = `https://www.zohoapis.com/crm/v2/Accounts`;
+    const method = "PUT";
+    const data = {
+      data: [accountData]
+    };
+
+    try {
+      const response = await this.customRequestV2(url, method, data);
+      console.log("Account Updated: ", response);
+      return response;
+    } catch (error) {
+      console.error("Failed to update account: ", error);
+      throw error;
     }
   }
 }
