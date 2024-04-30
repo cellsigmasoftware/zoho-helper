@@ -155,6 +155,42 @@ class Books extends ZohoAuth {
       console.error("Error fetching customers:", error);
     }
   }
+  async getBills(org_id){
+    try {
+      const response = await this.customRequestV3(
+        `https://books.zoho.com/api/v3/bills?organization_id=${org_id}`,
+        "GET"
+      );
+      return response;
+    } catch (error) {
+      console.error("Error fetching bills:", error);
+
+    }
+  }
+  async createBills(org_id, data) {
+    try {
+      const response = await this.customRequestV3(
+        `https://books.zoho.com/api/v3/bills?organization_id=${org_id}`,
+        "POST",
+        data
+      );
+      return response;
+    } catch (error) {
+      console.error("Error fetching customers:", error);
+    }
+  }
+  async getItems(org_id){
+    try {
+      const response = await this.customRequestV3(
+        `https://books.zoho.com/api/v3/items?organization_id=${org_id}`,
+        "GET"
+      );
+      return response;
+    } catch (error) {
+      console.error("Error fetching bills:", error);
+
+    }
+  }
 
   /**
    *
