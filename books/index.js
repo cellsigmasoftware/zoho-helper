@@ -1,5 +1,8 @@
-const ZohoAuth = require("./../zoho/auth.zoho");
-
+const ZohoAuth = require("./../zoho/auth.zoho");	
+// books.zoho.com/api/v3      OLD Domain
+	
+// www.zohoapis.com/books/v3  New Domain
+const baseUrl = "https://www.zohoapis.com/books/v3";
 class Books extends ZohoAuth {
   constructor(_uniq_name, _client_id, _client_secret, _refresh_token) {
     super(_uniq_name, _client_id, _client_secret, _refresh_token);
@@ -14,7 +17,7 @@ class Books extends ZohoAuth {
   async createBankAccount(org_id, parameters) {
     try {
       return await this.customRequest(
-        `https://books.zoho.com/api/v3/bankaccounts?organization_id=${org_id}`,
+        `${baseUrl}/bankaccounts?organization_id=${org_id}`,
         "POST",
         parameters
       );
@@ -33,7 +36,7 @@ class Books extends ZohoAuth {
     const token = await this.getToken();
     try {
       return await this.customRequestV2(
-        `https://books.zoho.com/api/v3/settings/currencies?organization_id=${org_id}`,
+        `${baseUrl}/settings/currencies?organization_id=${org_id}`,
         "GET"
       );
     } catch (e) {
@@ -55,7 +58,7 @@ class Books extends ZohoAuth {
     try {
       while (true) {
         const response = await this.customRequestV2(
-          `https://books.zoho.com/api/v3/contacts?organization_id=${org_id}&page=${page}&per_page=${perPage}`,
+          `${baseUrl}/contacts?organization_id=${org_id}&page=${page}&per_page=${perPage}`,
           "GET"
         );
 
@@ -86,7 +89,7 @@ class Books extends ZohoAuth {
 
   async postContacts(org_id, contactDetails) {
     const token = await this.getToken();
-    const url = `https://books.zoho.com/api/v3/contacts?organization_id=${org_id}`;
+    const url = `${baseUrl}/contacts?organization_id=${org_id}`;
     const method = "POST";
     try {
       const response = await this.customRequestV3(
@@ -104,7 +107,7 @@ class Books extends ZohoAuth {
 
   async updateContacts(contact_id, parameters, org_id) {
     const token = await this.getToken();
-    const url = `https://books.zoho.com/api/v3/contacts/${contact_id}`;
+    const url = `${baseUrl}/contacts/${contact_id}`;
     const method = "PUT";
     try {
       const response = await this.customRequestV3(
@@ -128,7 +131,7 @@ class Books extends ZohoAuth {
   async getInvoices(org_id) {
     try {
       const response = await this.customRequestV3(
-        `https://books.zoho.com/api/v3/invoices?organization_id=${org_id}`,
+        `${baseUrl}/invoices?organization_id=${org_id}`,
         "GET"
       );
       return response;
@@ -146,7 +149,7 @@ class Books extends ZohoAuth {
   async createInvoices(org_id, data) {
     try {
       const response = await this.customRequestV3(
-        `https://books.zoho.com/api/v3/invoices?organization_id=${org_id}`,
+        `${baseUrl}/invoices?organization_id=${org_id}`,
         "POST",
         data
       );
@@ -158,7 +161,7 @@ class Books extends ZohoAuth {
   async getBills(org_id){
     try {
       const response = await this.customRequestV3(
-        `https://books.zoho.com/api/v3/bills?organization_id=${org_id}`,
+        `${baseUrl}/bills?organization_id=${org_id}`,
         "GET"
       );
       return response;
@@ -170,7 +173,7 @@ class Books extends ZohoAuth {
   async createBills(org_id, data) {
     try {
       const response = await this.customRequestV3(
-        `https://books.zoho.com/api/v3/bills?organization_id=${org_id}`,
+        `${baseUrl}/bills?organization_id=${org_id}`,
         "POST",
         data
       );
@@ -182,7 +185,7 @@ class Books extends ZohoAuth {
   async getItems(org_id){
     try {
       const response = await this.customRequestV3(
-        `https://books.zoho.com/api/v3/items?organization_id=${org_id}`,
+        `${baseUrl}/items?organization_id=${org_id}`,
         "GET"
       );
       return response;
@@ -205,7 +208,7 @@ class Books extends ZohoAuth {
     try {
       while (true) {
         const response = await this.customRequestV2(
-          `https://books.zoho.com/api/v3/vendors?organization_id=${org_id}&page=${page}`,
+          `${baseUrl}/vendors?organization_id=${org_id}&page=${page}`,
           "GET"
         );
 
@@ -242,7 +245,7 @@ class Books extends ZohoAuth {
     const token = await this.getToken();
     try {
       return await this.customRequestV2(
-        `https://books.zoho.com/api/v3/organizations`,
+        `${baseUrl}/organizations`,
         "GET"
       );
     } catch (e) {
@@ -261,7 +264,7 @@ class Books extends ZohoAuth {
     const token = await this.getToken();
     try {
       return await this.customRequest(
-        `https://books.zoho.com/api/v3/banktransactions?organization_id=${org_id}`,
+        `${baseUrl}/banktransactions?organization_id=${org_id}`,
         "POST",
         parameters
       );
@@ -281,7 +284,7 @@ class Books extends ZohoAuth {
     const token = await this.getToken();
     try {
       return await this.customRequest(
-        `https://books.zoho.com/api/v3/expenses?organization_id=${org_id}`,
+        `${baseUrl}/expenses?organization_id=${org_id}`,
         "POST",
         parameters
       );
@@ -300,7 +303,7 @@ class Books extends ZohoAuth {
     const token = await this.getToken();
     try {
       return await this.customRequestV2(
-        `https://books.zoho.com/api/v3/expenses?organization_id=${org_id}`,
+        `${baseUrl}/expenses?organization_id=${org_id}`,
         "GET"
       );
     } catch (e) {
@@ -318,7 +321,7 @@ class Books extends ZohoAuth {
     const token = await this.getToken();
     try {
       return await this.customRequestV2(
-        `https://books.zoho.com/api/v3/chartofaccounts?organization_id=${org_id}`,
+        `${baseUrl}/chartofaccounts?organization_id=${org_id}`,
         "GET"
       );
     } catch (e) {
@@ -336,7 +339,7 @@ class Books extends ZohoAuth {
     const token = await this.getToken();
     try {
       return await this.customRequestV2(
-        `https://books.zoho.com/api/v3/chartofaccounts?organization_id=${org_id}`,
+        `${baseUrl}/chartofaccounts?organization_id=${org_id}`,
         "GET"
       );
     } catch (e) {
@@ -354,7 +357,7 @@ class Books extends ZohoAuth {
     const token = await this.getToken();
     try {
       return await this.customRequestV2(
-        `https://books.zoho.com/api/v3/expenses?organization_id=${org_id}`,
+        `${baseUrl}/expenses?organization_id=${org_id}`,
         "GET"
       );
     } catch (e) {
@@ -371,7 +374,7 @@ class Books extends ZohoAuth {
   async getCurrencies(org_id) {
     try {
       return await this.customRequestV2(
-        `https://books.zoho.com/api/v3/settings/currencies?organization_id=${org_id}`,
+        `${baseUrl}/settings/currencies?organization_id=${org_id}`,
         "GET"
       );
     } catch (e) {
@@ -393,7 +396,7 @@ class Books extends ZohoAuth {
       let hasMorePages = true;
       while (hasMorePages) {
         const response = await this.customRequestV2(
-          `https://books.zoho.com/api/v3/chartofaccounts?organization_id=${org_id}&page=${page}`,
+          `${baseUrl}/chartofaccounts?organization_id=${org_id}&page=${page}`,
           "GET"
         );
         const results = response.data;
@@ -419,7 +422,7 @@ class Books extends ZohoAuth {
   async getAllBankv2(org_id) {
     try {
       return await this.customRequestV2(
-        `https://books.zoho.com/api/v3/bankaccounts?organization_id=${org_id}`,
+        `${baseUrl}/bankaccounts?organization_id=${org_id}`,
         "GET"
       );
     } catch (e) {
@@ -439,7 +442,7 @@ class Books extends ZohoAuth {
     const token = await this.getToken();
     try {
       return await this.customRequestV5(
-        `https://books.zoho.com/api/v3/banktransactions/${transaction_id}/uncategorize?organization_id=${org_id}`,
+        `${baseUrl}/banktransactions/${transaction_id}/uncategorize?organization_id=${org_id}`,
         "POST",
         parameters
       );
@@ -457,7 +460,7 @@ class Books extends ZohoAuth {
   async getAllTransactions(org_id) {
     try {
       return await this.customRequestV2(
-        `https://books.zoho.com/api/v3/banktransactions?organization_id=${org_id}`,
+        `${baseUrl}/banktransactions?organization_id=${org_id}`,
         "GET"
       );
     } catch (e) {
@@ -476,7 +479,7 @@ class Books extends ZohoAuth {
     const token = await this.getToken();
     try {
       return await this.customRequestV5(
-        `https://books.zoho.com/api/v3/bankstatements?organization_id=${org_id}`,
+        `${baseUrl}/bankstatements?organization_id=${org_id}`,
         "POST",
         parameters
       );
@@ -497,7 +500,7 @@ class Books extends ZohoAuth {
     const token = await this.getToken();
     try {
       return await this.customRequestV6(
-        `https://books.zoho.com/api/v3/banktransactions/${transaction_id}?organization_id=${org_id}`,
+        `${baseUrl}/banktransactions/${transaction_id}?organization_id=${org_id}`,
         "DELETE",
         parameters
       );
@@ -518,7 +521,7 @@ class Books extends ZohoAuth {
     const token = await this.getToken();
     try {
       return await this.customRequestV6(
-        `https://books.zoho.com/api/v3/banktransactions/${transaction_id}?organization_id=${org_id}`,
+        `${baseUrl}/banktransactions/${transaction_id}?organization_id=${org_id}`,
         "DELETE",
         parameters
       );
@@ -538,7 +541,7 @@ class Books extends ZohoAuth {
     const token = await this.getToken();
     try {
       return await this.customRequestV6(
-        `https://books.zoho.com/api/v3/settings/openingbalances?organization_id=${org_id}`,
+        `${baseUrl}/settings/openingbalances?organization_id=${org_id}`,
         "POST",
         parameters
       );
@@ -558,7 +561,7 @@ class Books extends ZohoAuth {
     const token = await this.getToken();
     try {
       return await this.customRequestV6(
-        `https://books.zoho.com/api/v3/settings/openingbalances?organization_id=${org_id}`,
+        `${baseUrl}/settings/openingbalances?organization_id=${org_id}`,
         "DELETE",
         parameters
       );
@@ -578,7 +581,7 @@ class Books extends ZohoAuth {
     const token = await this.getToken();
     try {
       return await this.customRequestV6(
-        `https://books.zoho.com/api/v3/settings/openingbalances?organization_id=${org_id}`,
+        `${baseUrl}/settings/openingbalances?organization_id=${org_id}`,
         "GET",
         parameters
       );
@@ -598,7 +601,7 @@ class Books extends ZohoAuth {
     const token = await this.getToken();
     try {
       return await this.customRequestV6(
-        `https://books.zoho.com/api/v3/settings/openingbalances?organization_id=${org_id}`,
+        `${baseUrl}/settings/openingbalances?organization_id=${org_id}`,
         "PUT",
         parameters
       );
@@ -618,7 +621,7 @@ class Books extends ZohoAuth {
     const token = await this.getToken();
     try {
       return await this.customRequestV6(
-        `https://books.zoho.com/api/v3/settings/banktransactions?organization_id=${org_id}`,
+        `${baseUrl}/settings/banktransactions?organization_id=${org_id}`,
         "GET",
         parameters
       );
@@ -627,6 +630,7 @@ class Books extends ZohoAuth {
       else console.error(e.message);
     }
   }
+  
 }
 
 module.exports = Books;
